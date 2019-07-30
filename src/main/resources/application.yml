@@ -1,0 +1,58 @@
+#端口号
+server:
+  port: 6004
+spring:
+  application:
+    #注册服务名
+    name: profAuth
+  http:
+    #请求限制
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  redis:
+    host: 127.0.0.1
+    password: admin123
+    database: 0
+    timeout: 0
+    port: 6379
+#向eureka注册信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin123@localhost:6003/eureka
+    #开启健康检查
+    healthcheck:
+      enabled: true
+    #复制实例变化信息到eureka服务器所需要的时间间隔，默认单位为秒，默认时间为30秒
+    instance-info-replication-interval-seconds: 10
+  instance:
+    #eureka注册中心在接收到实例的最后一次心跳后，需等待多久删除该实例，默认单位为秒，默认时间为90秒
+    lease-expiration-duration-in-seconds: 10
+    #该实例需多少秒向eureka注册中心发送心跳，以表明它仍然活着，默认单位为秒，默认时间为30秒
+    lease-renewal-interval-in-seconds: 5
+    metadata-map:
+      my-metada: profAuth
+    #以实例名称显示IP配置
+    preferIpAddress: true
+#设值ribbon超时时间
+ribbon:
+  ReadTimeout: 60000
+  SocketTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+              threadpool:2
+  default:
+    coreSize: 50
+    maximumSize: 10000
+    allowMaximumSizeToDivergeFromCoreSize: true
+    maxQueueSize: -1
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 30000000
