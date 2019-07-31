@@ -46,7 +46,7 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 60000
-              threadpool:2
+              threadpool: 2
   default:
     coreSize: 50
     maximumSize: 10000
