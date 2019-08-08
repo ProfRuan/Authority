@@ -1,12 +1,12 @@
-#¶Ë¿ÚºÅ
+#ç«¯å£å·
 server:
   port: 6004
 spring:
   application:
-    #×¢²á·şÎñÃû
+    #æ³¨å†ŒæœåŠ¡å
     name: profAuth
   http:
-    #ÇëÇóÏŞÖÆ
+    #è¯·æ±‚é™åˆ¶
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
@@ -16,26 +16,40 @@ spring:
     database: 0
     timeout: 0
     port: 6379
-#Ïòeureka×¢²áĞÅÏ¢
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/test
+    platform: h2
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
+#å‘eurekaæ³¨å†Œä¿¡æ¯
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin123@localhost:6003/eureka
-    #¿ªÆô½¡¿µ¼ì²é
+      #http://admin:admin123@localhost:6003/eureka
+      defaultZone: http://eureka.didispace.com/eureka/
+    #å¼€å¯å¥åº·æ£€æŸ¥
     healthcheck:
       enabled: true
-    #¸´ÖÆÊµÀı±ä»¯ĞÅÏ¢µ½eureka·şÎñÆ÷ËùĞèÒªµÄÊ±¼ä¼ä¸ô£¬Ä¬ÈÏµ¥Î»ÎªÃë£¬Ä¬ÈÏÊ±¼äÎª30Ãë
+    #å¤åˆ¶å®ä¾‹å˜åŒ–ä¿¡æ¯åˆ°eurekaæœåŠ¡å™¨æ‰€éœ€è¦çš„æ—¶é—´é—´éš”ï¼Œé»˜è®¤å•ä½ä¸ºç§’ï¼Œé»˜è®¤æ—¶é—´ä¸º30ç§’
     instance-info-replication-interval-seconds: 10
   instance:
-    #eureka×¢²áÖĞĞÄÔÚ½ÓÊÕµ½ÊµÀıµÄ×îºóÒ»´ÎĞÄÌøºó£¬ĞèµÈ´ı¶à¾ÃÉ¾³ı¸ÃÊµÀı£¬Ä¬ÈÏµ¥Î»ÎªÃë£¬Ä¬ÈÏÊ±¼äÎª90Ãë
+    #eurekaæ³¨å†Œä¸­å¿ƒåœ¨æ¥æ”¶åˆ°å®ä¾‹çš„æœ€åä¸€æ¬¡å¿ƒè·³åï¼Œéœ€ç­‰å¾…å¤šä¹…åˆ é™¤è¯¥å®ä¾‹ï¼Œé»˜è®¤å•ä½ä¸ºç§’ï¼Œé»˜è®¤æ—¶é—´ä¸º90ç§’
     lease-expiration-duration-in-seconds: 10
-    #¸ÃÊµÀıĞè¶àÉÙÃëÏòeureka×¢²áÖĞĞÄ·¢ËÍĞÄÌø£¬ÒÔ±íÃ÷ËüÈÔÈ»»î×Å£¬Ä¬ÈÏµ¥Î»ÎªÃë£¬Ä¬ÈÏÊ±¼äÎª30Ãë
+    #è¯¥å®ä¾‹éœ€å¤šå°‘ç§’å‘eurekaæ³¨å†Œä¸­å¿ƒå‘é€å¿ƒè·³ï¼Œä»¥è¡¨æ˜å®ƒä»ç„¶æ´»ç€ï¼Œé»˜è®¤å•ä½ä¸ºç§’ï¼Œé»˜è®¤æ—¶é—´ä¸º30ç§’
     lease-renewal-interval-in-seconds: 5
     metadata-map:
       my-metada: profAuth
-    #ÒÔÊµÀıÃû³ÆÏÔÊ¾IPÅäÖÃ
+    #ä»¥å®ä¾‹åç§°æ˜¾ç¤ºIPé…ç½®
     preferIpAddress: true
-#ÉèÖµribbon³¬Ê±Ê±¼ä
+#è®¾å€¼ribbonè¶…æ—¶æ—¶é—´
 ribbon:
   ReadTimeout: 60000
   SocketTimeout: 60000
@@ -46,7 +60,7 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 60000
-              threadpool: 2
+              threadpool:2
   default:
     coreSize: 50
     maximumSize: 10000
