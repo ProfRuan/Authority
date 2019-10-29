@@ -1,10 +1,9 @@
 package com.prof.ruan.service;
 
 import com.prof.ruan.dao.IMemberDao;
-import com.prof.ruan.entity.Member;
-import com.prof.ruan.entity.Permission;
-import com.prof.ruan.entity.Role;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.prof.ruan.entity.po.Member;
+import com.prof.ruan.entity.po.Role;
+import com.prof.ruan.entity.vo.MemberVo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -37,7 +36,7 @@ public class MyUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Member member = memberDao.findByMemberName(userName);
+        MemberVo member = memberDao.findByMemberName(userName);
         if(null == member){
             throw new UsernameNotFoundException(userName);
         }
@@ -45,7 +44,7 @@ public class MyUserDetailService implements UserDetailsService {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
         for (Role role : member.getRoles()){
-            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getRoleName());
+            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_"+role.getRoleName().toUpperCase());
             grantedAuthorities.add(grantedAuthority);
         }
 

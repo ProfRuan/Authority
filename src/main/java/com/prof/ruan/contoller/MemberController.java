@@ -1,6 +1,5 @@
 package com.prof.ruan.contoller;
 
-import com.prof.ruan.service.MyUserDetailService;
 import com.prof.ruan.util.Result;
 import com.prof.ruan.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +9,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/auth")
 public class MemberController {
 
+
     @Autowired
-    private MyUserDetailService userDetailService;
+    private HttpServletRequest request;
 
     @Autowired
     private ConsumerTokenServices consumerTokenServices;
 
     @GetMapping("/member")
     public Principal user(Principal principal){
+        System.out.println("token:"+request.getParameter("access_token"));
         return principal;
     }
 
